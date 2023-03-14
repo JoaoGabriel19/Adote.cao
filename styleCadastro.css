@@ -1,0 +1,100 @@
+
+          /* Global styles */
+          * {
+            box-sizing: border-box;
+          }
+        
+          body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            color: #1c1e21;
+            background-color: #f0f2f5;
+          }
+        
+          h1 {
+            font-size: 28px;
+            font-weight: normal;
+            margin: 0 0 20px;
+          }
+        
+          label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+          }
+        
+          input[type="text"],
+          input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #dddfe2;
+            border-radius: 3px;
+            background-color: #fff;
+            font-size: 14px;
+            margin-bottom: 10px;
+          }
+        
+          input[type="checkbox"] {
+            margin-right: 5px;
+          }
+        
+          button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #CC5500;
+            border: none;
+            border-radius: 3px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 10px;
+          }
+        
+          button:hover {
+            background-color: #E3963E;
+          }
+        
+          #main {
+            float: left;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f0f2f5;
+            border: 1px solid #ccd0d5;
+            border-radius: 4px;
+            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.08);
+          }
+        
+          #main h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+          }
+        
+          #formContainer {
+            float: left;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccd0d5;
+            border-radius: 4px;
+            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.08);
+            max-width: 600px;
+            box-sizing: border-box;
+          }
+        
+          #formContainer p {
+            font-size: 14px;
+            line-height: 1.5;
+          }
+        
+          @media (max-width: 480px) {
+            #main,
+            #formContainer {
+              width: 100%;
+              padding: 20px;
+              box-shadow: none;
+            }
+          }
