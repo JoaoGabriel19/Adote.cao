@@ -46,6 +46,8 @@
               <label for="cpf">CPF</label>
               <input type="text" name="cpf" id="cpf">
               <label for="birht">Data de Nascimento</label>
+              <label for="cep">CEP</label>
+              <input type="text" name="cep" id="cep">
               <input type="date" name="birth" id="birth">
               <label for="state">Estado</label>
               <input type="text" name="state" id="state">
@@ -53,8 +55,7 @@
               <input type="text" name="city" id="city">
               <label for="neighborhood">Bairro</label>
               <input type="text" name="neighborhood" id="neighborhood">
-              <label for="cep">CEP</label>
-              <input type="text" name="cep" id="cep">
+              
 
             </div>
             <button onclick="createAccount()">Cadastrar</button>
@@ -137,6 +138,29 @@
                 httpRequest.send("login="+login+"&password="+password+"&name="+name+"&cpf="+cpf+"&birth="+birth+"&isOng="+isOng);
                 }      
             }
+          
+            let cep = document.getElementById("cep");
+            let data;
+            //PREENCHIMENTO AUTOMATICO DE CAMPOS DE ENDEREÇO
+            cep.addEventListener("input", function(){
+              let cepValue = cep.value;
+              let url = "https://api.postmon.com.br/v1/cep/"+cepValue;
+              let httpRequest = new XMLHttpRequest();
+              httpRequest.open("GET",url);
+              httpRequest.onload = () =>{
+                if(httpRequest.status === 200){
+                   data = JSON.parse(httpRequest.responseText);
+                  let state = document.getElementById("state");
+                  let city = document.getElementById("city");
+                  let neighborhood = document.getElementById("neighborhood");
+                  state.value = data.estado_info.nome;
+                  city.value = data.cidade;
+                  neighborhood.value = data.bairro;
+                }
+              }
+              httpRequest.send();
+            });
+
         </script>
     </body>
 </html>
