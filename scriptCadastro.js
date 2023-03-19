@@ -32,7 +32,7 @@ let isOng = document.getElementById("isOng");
                   if(httpRequest.readyState === XMLHttpRequest.DONE){
                     if(httpRequest.status === 200){
                       window.alert("Conta Criada com sucesso!");
-                      window.location.replace("http://127.0.0.1:5500/login.html");
+                      window.location.href = "http://127.0.0.1:5500/login.html";
                     }else if(httpRequest.status === 400 || httpRequest.status === 422 || httpRequest.status === 409 || httpRequest.status === 501){
                       window.alert(httpRequest.responseText);
                     }
@@ -88,3 +88,5 @@ let isOng = document.getElementById("isOng");
               }
               httpRequest.send();
             });
+
+          
