@@ -1,6 +1,5 @@
 package adoteCaoProjetoController;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,98 +8,146 @@ import adoteCaoProjetoModel.Dao;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 
 public class Validations {
 	
-	Dao dao = new Dao();
+	    public static final int INVALID_CITY = 1;
+	    public static final int INVALID_CEP = 3;
+	    public static final int INVALID_LOGIN = 4;
+	    public static final int INVALID_PASSWORD = 5;
+	    public static final int INVALID_CPF = 7;
+	    public static final int INVALID_BIRTH = 8;
+	    public static final int INVALID_ONG_NAME = 9;
+	    public static final int LOGIN_ALREADY_EXISTS = 10;
+	    public static final int CPF_ALREADY_EXISTS = 11;
+	    public static final int ONG_ALREADY_EXISTS = 12;
+	    public static final int FIELD_IS_EMPTY = 13;
+	    public static final int DATABASE_ERROR = 14;
+	    public static final int NO_ERROR = 0;
 
-	private final String ERROR_CITY = "&Cidade Invalida";
-	private final String ERROR_NEIGHBORHOOD = "&Bairro invalido";
-	private final String ERROR_CEP = "&CEP invalido";
-	private final String ERROR_LOGIN = "&Login invalido";
-	private final String ERROR_PASSWORD = "&Senha invalida";
-	private final String ERROR_NAME = "&Nome invalido";
-	private final String ERROR_CPF = "&CPF invalido";
-	private final String ERROR_BIRTH = "&Data de nascimento invalida";
-	private final String ERROR_ONG_NAME = "&Nome da ONG invalido";
-	private final String NO_ERROR = "&Dados validos";
-	private final String ERROR_EMPTY = "&Nao pode ser nulo";
-	private final String ERROR_EMAIL_ALREADY_EXISTS = "&Email ja cadastrado";
-	private final String ERROR_ONG_NAME_ALREADY_EXISTS = "&Ong ja cadastrado";
-	private final String ERROR_CPF_ALREADY_EXISTS = "&cpf ja cadastrado";
+	Dao dao = new Dao();
 	
-	private enum ErrorCode {
-	        CITY, 
-	        NEIGHBORHOOD, 
-	        CEP, 
-	        LOGIN, 
-	        PASSWORD, 
-	        NAME,
-	        CPF,
-	        BIRTH,
-	        ONG_NAME,
-	        NO_ERROR
-	    }
-	
-	
-	//VALIDACAO PARA ADOTANTE
-	public String validateInputs(String city, String neighborhood, String cep,
+	public int validateInputs(String city, String neighborhood, String cep,
 			String login, String password, String name, String cpf, String birth, String ongName, boolean isOng) throws ClassNotFoundException, IOException {
 		 String[] inputs = {city, neighborhood, cep, login, password, name, cpf, birth};
-		String errorMessage = null;
+		int errorMessage = -1;
 		for(int i = 0; i < inputs.length; i++) {
 			if(inputs[i] == null || inputs[i].isEmpty()) {
-				errorMessage = ErrorCode.values()[i] + ERROR_EMPTY;
+				errorMessage = FIELD_IS_EMPTY;
+				System.out.println("Campo com erro: "+i);
 				return errorMessage;
 			}
+		}
 			if(isOng) {
 				if(ongName == null || ongName.isEmpty()) {
-					errorMessage = ErrorCode.values()[8]+ ERROR_EMPTY;
+					errorMessage = FIELD_IS_EMPTY;
+					System.out.println("ong vazio");
+					return errorMessage;
 				}
 			
 			}
-		}
+		
 		if(!validateCep(cep)) {
-			errorMessage = ErrorCode.values()[2] + ERROR_CEP;
+			errorMessage = INVALID_CEP;
+			System.out.println("erro no cep");
 			return errorMessage;
 		}
 		else if(!validateLogin(login)) {
-			errorMessage = ErrorCode.values()[3] + ERROR_LOGIN;
+			errorMessage = INVALID_LOGIN;
+			System.out.println("erro no login");
 			return errorMessage;
 		}else if(dao.checkForDuplicityOngEmail(login)){	
-			errorMessage = ErrorCode.values()[3] + ERROR_EMAIL_ALREADY_EXISTS;
+			errorMessage = LOGIN_ALREADY_EXISTS;
+			System.out.println("email ja existe");
 			return errorMessage;
 		}
-		else if(!validatePassword(password)) {
-			errorMessage = ErrorCode.values()[4] + ERROR_PASSWORD;
+		else if(dao.checkForDuplicityAdopterEmail(login)){	
+			errorMessage = LOGIN_ALREADY_EXISTS;
+			System.out.println("email ja existe");
+			return errorMessage;
+		}else if(!validatePassword(password)) {
+			errorMessage = INVALID_PASSWORD;
+			System.out.println("senha invalida");
 			return errorMessage;
 		}
 		else if(!validateCPF(cpf)) {
-			errorMessage = ErrorCode.values()[6] + ERROR_CPF;
+			errorMessage = INVALID_CPF;
+			System.out.println("cpf invalido");
 			return errorMessage;
 		}
 		else if(dao.checkForDuplicityOngCPF(cpf)) {
-			errorMessage = ErrorCode.values()[6] + ERROR_CPF_ALREADY_EXISTS;
-		}
+			errorMessage = CPF_ALREADY_EXISTS;
+			System.out.println("cpf ja existe");
+		} 
+		else if(dao.checkForDuplicityAdopterCPF(cpf)) {
+			errorMessage = CPF_ALREADY_EXISTS;
+			System.out.println("cpf ja existe");
+		} 
 		else if(!validateBirth(birth)) {
-			errorMessage = ErrorCode.values()[7] + ERROR_BIRTH;
+			errorMessage = INVALID_BIRTH;
+			System.out.println("data invalida");
 			return errorMessage;
 		}else if(dao.checkForDuplicityOngName(ongName)){
-			errorMessage = ErrorCode.values()[8] + ERROR_ONG_NAME_ALREADY_EXISTS;
+			errorMessage = ONG_ALREADY_EXISTS;
+			System.out.println("ong ja existe");
 			return errorMessage;
 		}else {
-			errorMessage = ErrorCode.values()[9] + NO_ERROR;
+			errorMessage = NO_ERROR;
+			System.out.println("semm erros");
 			return errorMessage;
 		}
 		return errorMessage;
 		
 	}
-
 	
 	private boolean validatePassword(String password) {
-		boolean hasSpecialChar = password.matches(".*[!@#$%^&*()_+=\\[\\]{};':\"\\\\|,.<>\\/?-].*");
-		return hasSpecialChar;
+		boolean upperCase = false;
+		boolean lowerCase = false;
+		boolean hasSpecialChar = false;
+		boolean hasNumber = false;
+		if(password.length() < 4 || password.length() > 10) {
+			if(password.length() < 4) {
+				System.out.println("senha curta");
+			}else if(password.length() > 10) {
+				System.out.println("Senha longa");
+			}
+			return false;
+		}
+		 for (int i = 0; i < password.length(); i++) {
+		        if (Character.isUpperCase(password.charAt(i))) {
+		        	upperCase = true;
+		        	System.out.println("Tem +");
+		        	break;
+		        }
+		        
+		    }
+		 for (int i = 0; i < password.length(); i++) {
+		        if (Character.isLowerCase(password.charAt(i))) {
+		            lowerCase = true;
+		            System.out.println("tem menos");
+		            break;
+		        }
+		 }
+		 for (int i = 0; i < password.length(); i++) {
+		        char c = password.charAt(i);
+		        if (!Character.isLetterOrDigit(c) && !Character.isWhitespace(c)) {
+		            hasSpecialChar = true;
+		            System.out.println("tem especial");
+		            break;
+		        }
+		 }
+		 for (int i = 0; i < password.length(); i++) {
+		        if (Character.isDigit(password.charAt(i))) {
+		            hasNumber = true;
+		            System.out.println("tem numero");
+		            break;
+		        }
+		    }
+		 if(upperCase && lowerCase && hasSpecialChar && hasNumber) {
+			 return true;
+		 }else {
+			 return false;
+		 }
 	}
 	
 	private boolean validateCep(String cep) {

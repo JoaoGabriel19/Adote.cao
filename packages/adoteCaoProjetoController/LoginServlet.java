@@ -31,8 +31,6 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		configureCors(response);
-		String password = request.getParameter("password");
-		String login = request.getParameter("login");
 	}
 
 	private void configureCors(HttpServletResponse response) {

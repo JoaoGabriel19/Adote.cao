@@ -14,7 +14,7 @@ CREATE TABLE adress (
 CREATE TABLE userOng (
   idOng INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   login VARCHAR(50) NOT NULL,
-  pw VARCHAR(50) NOT NULL,
+  pw VARCHAR(64) NOT NULL,
   username VARCHAR(50) NOT NULL,
   cpf VARCHAR(11) NOT NULL,
   birth DATE NOT NULL,
@@ -38,11 +38,15 @@ CREATE TABLE animal (
 
 CREATE TABLE userAdopter (
   idAdopter INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  name VARCHAR(50) NOT NULL,
+  username VARCHAR(50) NOT NULL,
   email VARCHAR(100) NOT NULL,
-  pw VARCHAR(50) NOT NULL,
-  publicKey VARCHAR(500) NOT NULL,
-  privateKey VARCHAR(500) NOT NULL
+  pw VARCHAR(64) NOT NULL,
+  cpf VARCHAR(11) NOT NULL,
+  birth DATE NOT NULL,
+  publicKey VARCHAR(1000) NOT NULL,
+  privateKey VARCHAR(1000) NOT NULL,
+  idAdress INT NOT NULL,
+  FOREIGN KEY (idAdress) REFERENCES adress(idAdress)
 );
 
 CREATE TABLE animalAdoption (
@@ -65,40 +69,4 @@ CREATE TABLE animalBehavior (
   FOREIGN KEY (idBehavior) REFERENCES behavior(idBehavior),
   PRIMARY KEY (idAnimal, idBehavior)
 );
-
-CREATE TABLE state (
-  stateName VARCHAR(20) NOT NULL,
-  acronym VARCHAR(2) NOT NULL,
-  ibgeCode VARCHAR(2) NOT NULL PRIMARY KEY
-);
-
-INSERT INTO state (ibgeCode, acronym, stateName) VALUES
-    (11, 'RO', 'Rondonia'),
-    (12, 'AC', 'Acre'),
-    (13, 'AM', 'Amazonas'),
-    (14, 'RR', 'Roraima'),
-    (15, 'PA', 'Para'),
-    (16, 'AP', 'Amapa'),
-    (17, 'TO', 'Tocantins'),
-    (21, 'MA', 'Maranhao'),
-    (22, 'PI', 'Piaui'),
-    (23, 'CE', 'Ceara'),
-    (24, 'RN', 'Rio Grande do Norte'),
-    (25, 'PB', 'Paraiba'),
-    (26, 'PE', 'Pernambuco'),
-    (27, 'AL', 'Alagoas'),
-    (28, 'SE', 'Sergipe'),
-    (29, 'BA', 'Bahia'),
-    (31, 'MG', 'Minas Gerais'),
-    (32, 'ES', 'Espirito Santo'),
-    (33, 'RJ', 'Rio de Janeiro'),
-    (35, 'SP', 'Sao Paulo'),
-    (41, 'PR', 'Parana'),
-    (42, 'SC', 'Santa Catarina'),
-    (43, 'RS', 'Rio Grande do Sul'),
-    (50, 'MS', 'Mato Grosso do Sul'),
-    (51, 'MT', 'Mato Grosso'),
-    (52, 'GO', 'Goias'),
-    (53, 'DF', 'Distrito Federal');
-
 

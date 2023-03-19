@@ -79,8 +79,8 @@ public class Dao {
         }
     }
 
-	public boolean registerUserAdopter(UserAdopter user) throws SQLException, ClassNotFoundException, IOException {
-		 String sql = "INSERT INTO userAdopter (login, pw, username, cpf, birth) VALUES (?, ?, ?, ?, ?)";
+	public boolean registerUserAdopter(UserAdopter user, int idAdress) throws SQLException, ClassNotFoundException, IOException {
+		 String sql = "INSERT INTO userAdopter (email, pw, username, cpf, birth, publicKey, privateKey, idAdress) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	        try (Connection connection = this.connectDB();
 	             PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 	            statement.setString(1, user.getLogin());
@@ -88,6 +88,9 @@ public class Dao {
 	            statement.setString(3, user.getUsername());
 	            statement.setString(4, user.getCpf());
 	            statement.setString(5, user.getBirth());
+	            statement.setString(6, user.getPublicKey());
+	            statement.setString(7, user.getPrivateKey());
+	            statement.setInt(8, idAdress);
 	            int update = statement.executeUpdate();
 	            ResultSet keys = statement.getGeneratedKeys();
 	            if (keys.next()) {
@@ -155,6 +158,34 @@ public class Dao {
 
 	public boolean checkForDuplicityOngCPF(String cpf) throws ClassNotFoundException, IOException {
 		String sql = "SELECT * FROM userOng WHERE cpf = ?";
+		try (Connection conn = this.connectDB();
+		         PreparedStatement statement = conn.prepareStatement(sql)) {
+		        statement.setString(1, cpf);
+		        ResultSet rs = statement.executeQuery();
+		        return rs.next();
+		    } catch (SQLException e) {
+		        System.out.println(e.getMessage());
+		        return false;
+		    }
+	}
+	public boolean checkForDuplicityAdopterEmail(String login) throws ClassNotFoundException, IOException {
+		String sql = "SELECT * FROM userAdopter WHERE email = ?";
+		try (Connection conn = this.connectDB();
+		         PreparedStatement statement = conn.prepareStatement(sql)) {
+		        statement.setString(1, login);
+		        ResultSet rs = statement.executeQuery();
+		        return rs.next();
+		    } catch (SQLException e) {
+		        System.out.println(e.getMessage());
+		        return false;
+		    }
+		
+		
+	}
+
+
+	public boolean checkForDuplicityAdopterCPF(String cpf) throws ClassNotFoundException, IOException {
+		String sql = "SELECT * FROM userAdopter WHERE cpf = ?";
 		try (Connection conn = this.connectDB();
 		         PreparedStatement statement = conn.prepareStatement(sql)) {
 		        statement.setString(1, cpf);

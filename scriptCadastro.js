@@ -32,10 +32,8 @@ let isOng = document.getElementById("isOng");
                   if(httpRequest.readyState === XMLHttpRequest.DONE){
                     if(httpRequest.status === 200){
                       window.alert("Conta Criada com sucesso!");
-                              setTimeout(() => {
-                                window.location.replace("http://127.0.0.1:5500/login.html")
-                              }, 3000);
-                    }else if(httpRequest.status === 409){
+                      window.location.replace("http://127.0.0.1:5500/login.html");
+                    }else if(httpRequest.status === 400 || httpRequest.status === 422 || httpRequest.status === 409 || httpRequest.status === 501){
                       window.alert(httpRequest.responseText);
                     }
                   }
@@ -47,24 +45,25 @@ let isOng = document.getElementById("isOng");
                 let name = document.getElementById("name").value;
                 let cpf = document.getElementById("cpf").value;
                 let birth = document.getElementById("birth").value;
-                let state = document.getElementById("state");
-
-                let isOng = document.getElementById("isOng").checked;
-                
-                if(isOng == true){  
-                let ongName = document.getElementById("ongName").value;
                 let state = document.getElementById("state").value;
                 let city = document.getElementById("city").value;
                 let neighborhood = document.getElementById("neighborhood").value;
                 let cep = document.getElementById("cep").value;
+                let isOng = document.getElementById("isOng").checked;
 
-                console.log(login, password, name, cpf, birth, ongName);
+                
+                if(isOng == true){  
+                let ongName = document.getElementById("ongName").value;
+                
+
+                console.log(login, password, name, cpf, birth, state, neighborhood, cep, isOng, ongName);
                 httpRequest.send("login="+login+"&password="+password+"&name="+name+"&cpf="+cpf+"&birth="+birth+"&isOng="+isOng+"&ongName="+ongName+
                 "&state="+state+"&city="+city+"&neighborhood="+neighborhood+"&cep="+cep);
                 
                 }else if (isOng == false){
-                console.log(login, password, name, cpf, birth, isOng);
-                httpRequest.send("login="+login+"&password="+password+"&name="+name+"&cpf="+cpf+"&birth="+birth+"&isOng="+isOng);
+                console.log(login, password, name, cpf, birth, state, neighborhood, cep, isOng);
+                httpRequest.send("login="+login+"&password="+password+"&name="+name+"&cpf="+cpf+"&birth="+birth+"&isOng="+isOng+
+                "&state="+state+"&city="+city+"&neighborhood="+neighborhood+"&cep="+cep);
                 }      
             }
           

@@ -4,6 +4,7 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -12,7 +13,7 @@ public class Encrypt {
     final static String ALGORITHM = "RSA";
 
     public String toHash(String message) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("MD5");
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(message.getBytes());
         byte[] digest = md.digest();
 
@@ -51,5 +52,11 @@ public class Encrypt {
         }
 
         return null;
-    }  
+    } 
+    public static byte[] generateSalt(int length) {
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[length];
+        random.nextBytes(salt);
+        return salt;
+    }
 }

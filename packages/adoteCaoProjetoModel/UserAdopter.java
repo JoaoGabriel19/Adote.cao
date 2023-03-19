@@ -8,13 +8,10 @@ public class UserAdopter {
 	String username;
 	String cpf;
 	String birth;
+	String publicKey;
+	String privateKey;
+	int idAdress;
 	
-	public int getIdOng() {
-		return idAdopter;
-	}
-	public void setIdOng(int idAdopter) {
-		this.idAdopter = idAdopter;
-	}
 	public String getLogin() {
 		return login;
 	}
@@ -46,9 +43,35 @@ public class UserAdopter {
 		this.birth = birth;
 	}
 	
+	
+	public int getIdAdopter() {
+		return idAdopter;
+	}
+	public void setIdAdopter(int idAdopter) {
+		this.idAdopter = idAdopter;
+	}
+	public String getPublicKey() {
+		return publicKey;
+	}
+	public void setPublicKey(String publicKey) {
+		this.publicKey = publicKey;
+	}
+	public String getPrivateKey() {
+		return privateKey;
+	}
+	public void setPrivateKey(String privateKey) {
+		this.privateKey = privateKey;
+	}
+	public int getIdAdress() {
+		return idAdress;
+	}
+	public void setIdAdress(int idAdress) {
+		this.idAdress = idAdress;
+	}
 	public UserAdopter() {
 		super();
 	}
+
 	
 	
 
