@@ -35,7 +35,7 @@
             <label for="login">E-mail</label>
             <input type="text" id="login" name="login">
             <label for="password">Senha</label>
-            <input type="password" id="password" name="password">
+            <input type="password" id="password" name="password" required>
             <br>
             <input type="checkbox" id="isOng" name="isOng">
             <label for="isOng">Sou dono de uma ONG</label>
@@ -47,9 +47,9 @@
               <label for="cpf">CPF</label>
               <input type="text" name="cpf" id="cpf">
               <label for="birht">Data de Nascimento</label>
+              <input type="date" name="birth" id="birth">
               <label for="cep">CEP</label>
               <input type="text" name="cep" id="cep">
-              <input type="date" name="birth" id="birth">
               <label for="state">Estado</label>
               <input type="text" name="state" id="state">
               <label for="city">Cidade</label>
@@ -66,77 +66,6 @@
             <p>Adote.cão é um projeto que visa auxiliar ONGs a reduzir o número de animais sem lar criando um local perfeito para você que quer adotar um animal que se encaixe em seu estilo de vida.</p>
           </div>
         </body>        
-            <script src="scriptLogin.js"></script>
-    </body>
-</html>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Adote.Cão</title>
-        <link rel="stylesheet" href="styleCadastro.css">
-
-        <style>
-           #logo {
-              float: left;
-              width: 50%;
-              margin: 20px;
-              padding: 20px;
-              background-color: #fff;
-              border: 1px solid #ccd0d5;
-              border-radius: 4px;
-              box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.08);
-              max-width: 600px;
-              box-sizing: border-box;
-              }
-              
-              #logo img {
-              max-width: 100%;
-              }
-              
-              #logo p {
-              font-size: 14px;
-              line-height: 1.5;
-              }
-        </style>
-        
-        <body>
-          <div id="main">
-            <h1>Tela de criação de contas ADOTE.CÃO</h1>
-            <label for="login">E-mail</label>
-            <input type="text" id="login" name="login">
-            <label for="password">Senha</label>
-            <input type="password" id="password" name="password">
-            <br>
-            <input type="checkbox" id="isOng" name="isOng">
-            <label for="isOng">Sou dono de uma ONG</label>
-            <br>
-            <div id="formContainer">
-              <h2>Dados pessoas</h2>
-              <label for="name">Nome</label>
-              <input type="text" name="name" id="name">
-              <label for="cpf">CPF</label>
-              <input type="text" name="cpf" id="cpf">
-              <label for="birht">Data de Nascimento</label>
-              <label for="cep">CEP</label>
-              <input type="text" name="cep" id="cep">
-              <input type="date" name="birth" id="birth">
-              <label for="state">Estado</label>
-              <input type="text" name="state" id="state">
-              <label for="city">Cidade</label>
-              <input type="text" name="city" id="city">
-              <label for="neighborhood">Bairro</label>
-              <input type="text" name="neighborhood" id="neighborhood">
-              
-
-            </div>
-            <button onclick="createAccount()">Cadastrar</button>
-          </div>
-          <div id="logo">
-            <img src="images\adote_Cao_Logo.png">
-            <p>Adote.cão é um projeto que visa auxiliar ONGs a reduzir o número de animais sem lar criando um local perfeito para você que quer adotar um animal que se encaixe em seu estilo de vida.</p>
-          </div>
-        </body>        
-            <script src="scriptLogin.js"></script>
+            <script src="scriptCadastro.js"></script>
     </body>
 </html>

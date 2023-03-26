@@ -1,15 +1,21 @@
 package adoteCaoProjetoController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import adoteCaoProjetoModel.Dao;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 public class Validations {
+	
+	Encrypt encrypt = new Encrypt();
+	Dao dao = new Dao();
 	
 	    public static final int INVALID_CITY = 1;
 	    public static final int INVALID_CEP = 3;
@@ -23,9 +29,11 @@ public class Validations {
 	    public static final int ONG_ALREADY_EXISTS = 12;
 	    public static final int FIELD_IS_EMPTY = 13;
 	    public static final int DATABASE_ERROR = 14;
+	    public static final int WRONG_CREDENTIALS = 15;
+	    public static final int SERVER_ERROR = 16;
 	    public static final int NO_ERROR = 0;
 
-	Dao dao = new Dao();
+
 	
 	public int validateInputs(String city, String neighborhood, String cep,
 			String login, String password, String name, String cpf, String birth, String ongName, boolean isOng) throws ClassNotFoundException, IOException {
@@ -205,4 +213,21 @@ public class Validations {
             return false;
         }
     }	
+	
+	public List<Boolean> verifyLogin(String login, String password) throws NoSuchAlgorithmException, ClassNotFoundException, IOException{
+		List<Boolean> result = new ArrayList<Boolean>();
+		String hashPassword = encrypt.toHash(password);
+		boolean isOng = false;
+		boolean confirmation = false;
+		if(dao.validateLoginOng(hashPassword, login)) {
+			isOng = true;
+			confirmation = true;
+		}else if(dao.validateLoginAdopter(hashPassword, login)) {
+			isOng = false;
+			confirmation = true;
+		}
+		result.add(isOng);
+		result.add(confirmation);
+		return result;
+	}
 }

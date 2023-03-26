@@ -197,4 +197,30 @@ public class Dao {
 		    }
 	}
 
+	public boolean validateLoginOng(String hashPassword, String login) throws ClassNotFoundException, IOException {
+		String sql = "SELECT * FROM userOng WHERE login =? AND pw =?";
+		try(Connection conn = this.connectDB();
+				PreparedStatement statement = conn.prepareStatement(sql)){
+					statement.setString(1, login);
+					statement.setString(2, hashPassword);
+					ResultSet rs = statement.executeQuery();
+					return rs.next();
+				}catch(SQLException e) {
+					System.out.println(e.getMessage());
+				}
+		return false;
+	}
+	public boolean validateLoginAdopter(String hashPassword, String login) throws ClassNotFoundException, IOException {
+		String sql = "SELECT * FROM userAdopter WHERE email =? AND pw =?";
+		try(Connection conn = this.connectDB();
+				PreparedStatement statement = conn.prepareStatement(sql)){
+					statement.setString(1, login);
+					statement.setString(2, hashPassword);
+					ResultSet rs = statement.executeQuery();
+					return rs.next();
+				}catch(SQLException e) {
+					System.out.println(e.getMessage());
+				}
+		return false;
+	}
 }
