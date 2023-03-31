@@ -80,7 +80,7 @@ public class Dao {
     }
 
 	public boolean registerUserAdopter(UserAdopter user, int idAdress) throws SQLException, ClassNotFoundException, IOException {
-		 String sql = "INSERT INTO userAdopter (email, pw, username, cpf, birth, publicKey, privateKey, idAdress) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		 String sql = "INSERT INTO userAdopter (login, pw, username, cpf, birth, publicKey, privateKey, idAdress) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	        try (Connection connection = this.connectDB();
 	             PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 	            statement.setString(1, user.getLogin());
@@ -169,7 +169,7 @@ public class Dao {
 		    }
 	}
 	public boolean checkForDuplicityAdopterEmail(String login) throws ClassNotFoundException, IOException {
-		String sql = "SELECT * FROM userAdopter WHERE email = ?";
+		String sql = "SELECT * FROM userAdopter WHERE login = ?";
 		try (Connection conn = this.connectDB();
 		         PreparedStatement statement = conn.prepareStatement(sql)) {
 		        statement.setString(1, login);
@@ -211,7 +211,7 @@ public class Dao {
 		return false;
 	}
 	public boolean validateLoginAdopter(String hashPassword, String login) throws ClassNotFoundException, IOException {
-		String sql = "SELECT * FROM userAdopter WHERE email =? AND pw =?";
+		String sql = "SELECT * FROM userAdopter WHERE login =? AND pw =?";
 		try(Connection conn = this.connectDB();
 				PreparedStatement statement = conn.prepareStatement(sql)){
 					statement.setString(1, login);
@@ -222,5 +222,28 @@ public class Dao {
 					System.out.println(e.getMessage());
 				}
 		return false;
+	}
+
+	public boolean insertJWT(String jwt, boolean isOng, String login) throws ClassNotFoundException, SQLException, IOException {
+		String sql;
+		if(isOng) {
+			sql = "UPDATE userOng set jwt=? WHERE login=?";
+		}else {
+			sql = "UPDATE userAdopter set jwt=? WHERE login=?";
+		}
+		try(Connection conn = this.connectDB();
+				PreparedStatement statement = conn.prepareStatement(sql)){
+			statement.setString(1, jwt);
+			statement.setString(2, login);
+			int rowsUpdated = statement.executeUpdate();
+			if(rowsUpdated == 0) {
+				return false;
+			}else {
+				return true;
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

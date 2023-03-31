@@ -21,6 +21,7 @@ CREATE TABLE userOng (
   ongName VARCHAR(100) NOT NULL,
   publicKey VARCHAR(1000) NOT NULL,
   privateKey VARCHAR(1000) NOT NULL,
+  secretKey VARCHAR(300),
   idAdress INT NOT NULL,
   FOREIGN KEY (idAdress) REFERENCES adress(idAdress)
 );
@@ -39,12 +40,13 @@ CREATE TABLE animal (
 CREATE TABLE userAdopter (
   idAdopter INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   username VARCHAR(50) NOT NULL,
-  email VARCHAR(100) NOT NULL,
+  login VARCHAR(100) NOT NULL,
   pw VARCHAR(64) NOT NULL,
   cpf VARCHAR(11) NOT NULL,
   birth DATE NOT NULL,
   publicKey VARCHAR(1000) NOT NULL,
   privateKey VARCHAR(1000) NOT NULL,
+  secretKey VARCHAR(300),
   idAdress INT NOT NULL,
   FOREIGN KEY (idAdress) REFERENCES adress(idAdress)
 );

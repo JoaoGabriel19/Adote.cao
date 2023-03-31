@@ -22,6 +22,12 @@
   	<description></description>
   	<servlet-class>adoteCaoProjetoController.RegisterServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>JwtValidator</servlet-name>
+  	<display-name>JwtValidator</display-name>
+  	<description></description>
+  	<servlet-class>adoteCaoProjetoController.JwtValidator</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>LoginServlet</servlet-name>
   	<url-pattern>/LoginServlet</url-pattern>
@@ -33,5 +39,9 @@
   <servlet-mapping>
   	<servlet-name>RegisterServlet</servlet-name>
   	<url-pattern>/RegisterServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>JwtValidator</servlet-name>
+  	<url-pattern>/JwtValidator</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -11,7 +11,7 @@ function login(){
                 let sessionData = JSON.parse(httpRequest.responseText);
                 window.sessionStorage.setItem("isOng", sessionData.isOng);
                 window.sessionStorage.setItem("isLogged", sessionData.isLogged);
-                window.sessionStorage.setItem("login", sessionData.login);
+                window.sessionStorage.setItem("jwt", sessionData.jwt);
                 console.log(sessionData);
 
                 if(sessionData.isOng){
@@ -25,4 +25,8 @@ function login(){
     httpRequest.open("POST", URL_SERVLET_LOGIN, true);
     httpRequest.setRequestHeader('Content-type','application/x-www-form-urlencoded');
     httpRequest.send("login="+email+"&password="+password);
+}
+
+function getSession(){
+    let
 }
