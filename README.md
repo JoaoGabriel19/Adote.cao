@@ -4,9 +4,9 @@ O Adote.cão é um sistema desenvolvido para auxiliar ONGs a encontrar um lar pa
 # Contribuidores
 A equipe responsável pelo desenvolvimento do Adote.cão é composta por:
 
-João Gabriel
+[João Gabriel](https://github.com/JoaoGabriel19)
 
-Helena
+[Helena](https://github.com/LenaLatosinski)
 
 # Linguagens utilizadas no desenvolvimento
 ![Java](https://img.shields.io/badge/Java-8-red)
