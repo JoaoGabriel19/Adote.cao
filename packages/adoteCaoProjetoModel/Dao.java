@@ -41,6 +41,7 @@ public class Dao {
         String user = getConfigValueByKey("user");
         String password = getConfigValueByKey("password");
         Class.forName("com.mysql.cj.jdbc.Driver");
+        //Class.forName("org.postgresql.Driver");
 
         Connection connection = null;
         try {
@@ -53,6 +54,7 @@ public class Dao {
     }
     
     public boolean registerUserOng(UserOng user, int idAdress) throws SQLException, ClassNotFoundException, IOException {
+		// se precisar colocar public.userOng (em todas as tabelas que fazem transação)
         String sql = "INSERT INTO userOng (login, pw, username, cpf, birth, ongName, publicKey, privateKey, idAdress) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = this.connectDB();
              PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
